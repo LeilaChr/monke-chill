@@ -9,6 +9,10 @@ python = "^3.8"
 discord = "^1.7.3"
 Flask = "^2.0.2"
 replit = "^3.2.4"
+youtube_dl = "^2021.12.17"
+pafy = "^0.5.5"
+google_images_download = "^2.8.0"
+ffmpeg = "^1.4"
 
 [tool.poetry.dev-dependencies]
 
