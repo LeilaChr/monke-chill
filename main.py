@@ -4,9 +4,11 @@ import requests
 import json
 import random
 from replit import db
-#from Monke import keep_alive
 from discord.ext import commands
 import youtube_dl
+from keep_alive import keep_alive
+from main_cog import main_cog
+from music_cog import music_cog
 
 """"
 client = discord.Client()
@@ -103,9 +105,8 @@ keep_alive()
 #client.run(os.getenv('TOKEN'))
 
 #import all of the cogs
-from main_cog import main_cog
-from music_cog import music_cog
 
+keep_alive()
 bot = commands.Bot(command_prefix='?')
 
 #remove the default help command so that we can write out own
