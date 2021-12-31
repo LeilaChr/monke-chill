@@ -15,7 +15,7 @@ General commands:
 ?credits - This command returns the TRUE credits
 ?hello - This command returns a random welcome message
 ?die - This command returns a random last words
-?quotes - This command returns a random quote
+?quote - This command returns a random quote
 ?ping - This command returns the latency
 
 Music commands:
