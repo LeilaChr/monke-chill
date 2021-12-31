@@ -25,7 +25,7 @@ class music_cog(commands.Cog):
             'default_search': 'auto',
             'source_address': '0.0.0.0' # bind to ipv4 since ipv6 addresses cause issues sometimes
         }
-        self.FFMPEG_OPTIONS = {'options': '-vn'}
+        self.FFMPEG_OPTIONS = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5','options': '-vn'}
 
         self.vc = ""
     
@@ -120,7 +120,7 @@ class music_cog(commands.Cog):
         await self.vc.disconnect()
 
     
-    @commands.command(name='pause', help='This command pauses the song')
+    @commands.command(name="pause", help='This command pauses the song')
     async def pause(self,ctx):
         voice_client = ctx.message.guild.voice_client
         if voice_client.is_playing():
@@ -128,7 +128,7 @@ class music_cog(commands.Cog):
         else:
             await ctx.send("The bot is not playing anything at the moment.")
         
-    @commands.command(name='resume', help='Resumes the song')
+    @commands.command(name="resume", help='Resumes the song')
     async def resume(self,ctx):
         voice_client = ctx.message.guild.voice_client
         if voice_client.is_paused():
@@ -136,11 +136,12 @@ class music_cog(commands.Cog):
         else:
             await ctx.send("The bot is not playing anything. Use play command")
 
-    @commands.command(name='remove')
+    @commands.command(name="remove")
     async def remove(self,ctx, number):
         try:
             del(self.music_queue[int(number)])
             await ctx.send(f'Your queue is now `{self.music_queue}!`')
         except:
             await ctx.send('Your queue is either **empty** or the index is **out of range**')
+        
 
