@@ -58,7 +58,7 @@ No one but me, lozer!
 
     @commands.command(name='die', help='This command returns a random last words')
     async def die(self,ctx):
-        responses = ['Why have you brought my short life to an end', 'I could have done so much more', 'I have a family, kill them instead']
+        responses = ['Why have you brought my short life to an end', 'I could have done so much more', 'I have a family, kill them instead','It\'s better to burn out than to fade away. -Kurt Cobain','All compounded things are subject to vanish. Strive with earnestness. -Buddha','Relax - This won\'t hurt. -Hunter S. Thompson','I hope I haven\'t bored you. -Elvis Presley','Just don\'t leave me alone. -John Belushi','I do not believe in my death. -Salavdor Dali','Adieu, mes amis. Je vais Ã  la gloire. (Farewell, my friends. I go to glory.) -Isadora Duncan','I believe that a life lived for music is an existence spent wonderfully, and this is what I have dedicated my life to. -Luciano Pavarotti','Tell them I\'ve had a wonderful life. -Ludwig Wittgenstein','Friends applaud, the comedy is over. -Beethoven','I should have never switched from Scotch to martinis. -Humphrey Bogart']
         await ctx.send(choice(responses))
     
     @commands.command(name='ping', help='This command returns the latency')
@@ -76,7 +76,7 @@ No one but me, lozer!
     async def on_message(self, message):
         msg = message.content
         for word in self.sad_words:
-            if word == msg :
+            if word == msg.lower() :
                 await asyncio.sleep(1)
                 await message.channel.send(choice(self.options))
 

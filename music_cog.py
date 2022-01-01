@@ -117,7 +117,9 @@ class music_cog(commands.Cog):
             
     @commands.command(name="leave", help="Disconnecting bot from VC")
     async def dc(self, ctx):
-        await self.vc.disconnect()
+        if ctx.voice_client is not None:
+            return await ctx.voice_client.disconnect()
+        await ctx.send("I am not connected to a voice channel.")
 
     
     @commands.command(name="pause", help='This command pauses the song')
@@ -140,7 +142,6 @@ class music_cog(commands.Cog):
     async def remove(self,ctx, number):
         try:
             del(self.music_queue[int(number)])
-            await ctx.send(f'Your queue is now `{self.music_queue}!`')
         except:
             await ctx.send('Your queue is either **empty** or the index is **out of range**')
         
