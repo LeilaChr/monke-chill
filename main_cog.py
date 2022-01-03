@@ -63,6 +63,7 @@ No one but me, lozer!
     
     @commands.command(name='ping', help='This command returns the latency')
     async def ping(self,ctx: commands.Context):
+
         await ctx.send(f"Pong <:forced_smile:926234553096491041> ! {round(self.bot.latency * 1000)}ms")
 
     @commands.command(name='quote', help='This command returns the latency')
@@ -79,4 +80,5 @@ No one but me, lozer!
             if (' ' + word + ' ') in (' ' + msg.lower() + ' ') :
                 await asyncio.sleep(1)
                 await message.channel.send(choice(self.options))
+
 
