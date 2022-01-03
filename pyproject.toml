@@ -13,6 +13,7 @@ youtube_dl = "^2021.12.17"
 pafy = "^0.5.5"
 google_images_download = "^2.8.0"
 ffmpeg = "^1.4"
+PyNaCl = "^1.4.0"
 
 [tool.poetry.dev-dependencies]
 
