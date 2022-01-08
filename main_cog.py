@@ -41,6 +41,7 @@ No one but me, lozer!
         "Don't listen to Stews. He lies. You are a great person / bot!"
         ]
         
+        self.age=19
 
     @commands.command(name="help", help="Displays all the available commands")
     async def help(self, ctx):
