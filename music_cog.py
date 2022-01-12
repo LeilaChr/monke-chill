@@ -2,6 +2,8 @@ import discord
 from discord.ext import commands
 from random import choice
 from youtube_dl import YoutubeDL
+import os
+from googleapiclient.discovery import build
 
 class music_cog(commands.Cog):
     def __init__(self, bot):
@@ -9,7 +11,7 @@ class music_cog(commands.Cog):
     
         #all the music related stuff
         self.is_playing = False
-
+        self.now_playing = "Nothing is playing"
         # 2d array containing [song, channel]
         self.music_queue = []
         self.YDL_OPTIONS = {
@@ -34,6 +36,7 @@ class music_cog(commands.Cog):
         with YoutubeDL(self.YDL_OPTIONS) as ydl:
             try: 
                 info = ydl.extract_info("ytsearch:%s" % item, download=False)['entries'][0]
+                
             except Exception: 
                 return False
 
@@ -54,6 +57,54 @@ class music_cog(commands.Cog):
         else:
             self.is_playing = False
 
+    def playlist(self,item,voice_channel):
+        count =0
+        api_key = os.environ.get('YT_API_KEY')
+        youtube = build('youtube', 'v3', developerKey=api_key)
+        playlist_id = item
+        videos = []
+        nextPageToken = None
+        while True:
+            pl_request = youtube.playlistItems().list(
+                part='contentDetails',
+                playlistId=playlist_id,
+                maxResults=30,
+                pageToken=nextPageToken
+            )
+
+            pl_response = pl_request.execute()
+
+            vid_ids = []
+            for item in pl_response['items']:
+                vid_ids.append(item['contentDetails']['videoId'])
+
+            vid_request = youtube.videos().list(
+                part="statistics",
+                id=','.join(vid_ids)
+            )
+
+            vid_response = vid_request.execute()
+
+            for item in vid_response['items']:
+                vid_id = item['id']
+                yt_link = f'https://youtu.be/{vid_id}'
+                song = self.search_yt(yt_link)
+                self.music_queue.append([song, voice_channel])
+                count+=1
+                if(count == 30):
+                    break
+
+            nextPageToken = pl_response.get('nextPageToken')
+
+            if not nextPageToken:
+                break
+
+                
+        return count
+
+        
+        
+        
     # infinite loop checking 
     async def play_music(self):
         if len(self.music_queue) > 0:
@@ -68,6 +119,7 @@ class music_cog(commands.Cog):
             
             print(self.music_queue)
             #remove the first element as you are currently playing it
+            self.now_playing = self.music_queue[0][0]['title']
             self.music_queue.pop(0)
 
             self.vc.play(discord.FFmpegPCMAudio(m_url), after=lambda e: self.play_next())
@@ -77,7 +129,7 @@ class music_cog(commands.Cog):
     @commands.command(name="play", help="Plays a selected song from youtube")
     async def p(self, ctx, *args):
         query = " ".join(args)
-        
+        count=0
         voice_channel = ctx.author.voice.channel
         if voice_channel is None:
             #you need to be connected so that the bot knows where to go
@@ -85,16 +137,19 @@ class music_cog(commands.Cog):
         else:
 
             #if not ("youtube.com/watch?" in query or "https://youtu.be/" in query):
-            song = self.search_yt(query)
-            if type(song) == type(True):
-                await ctx.send("Could not download the song. Incorrect format try another keyword. This could be due to playlist.")
-                
             
-            await ctx.send("Song added to the queue")
-            self.music_queue.append([song, voice_channel])
+            if query.startswith('https://www.youtube.com/playlist?list='):
+                playlist_id=query.replace('https://www.youtube.com/playlist?list=', "")
+                count = self.playlist(playlist_id,voice_channel)      
+                await ctx.send(str(count) + " Songs added to the queue")
+            else:
+                song = self.search_yt(query)
+                await ctx.send("Song added to the queue")
+                self.music_queue.append([song, voice_channel])
             
             if self.is_playing == False:
                 await self.play_music()
+        
 
     @commands.command(name="queue", help="Displays the current songs in queue")
     async def q(self, ctx):
@@ -115,9 +170,10 @@ class music_cog(commands.Cog):
             #try to play next in the queue if it exists
             await self.play_music()
             
-    @commands.command(name="leave", help="Disconnecting bot from VC")
+    @commands.command(name="stop", help="Disconnecting bot from VC")
     async def dc(self, ctx):
         if ctx.voice_client is not None:
+            self.music_queue.clear()
             return await ctx.voice_client.disconnect()
         await ctx.send("I am not connected to a voice channel.")
 
@@ -144,5 +200,9 @@ class music_cog(commands.Cog):
             del(self.music_queue[int(number)])
         except:
             await ctx.send('Your queue is either **empty** or the index is **out of range**')
-        
-
+    
+    @commands.command(name="np")
+    async def np(self,ctx):
+        await ctx.send(self.now_playing)
+    
+  

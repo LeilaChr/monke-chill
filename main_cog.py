@@ -14,19 +14,20 @@ General commands:
 ?help - Displays all the available commands
 ?credits - This command returns the TRUE credits
 ?hello - This command returns a random welcome message
-?die - This command returns a random last words
+?die - This command returns random last words
 ?quote - This command returns a random quote
 ?ping - This command returns the latency
 ?birthday - This command displays a special birthday message
-Music commands:
 
-?play <keywords> - Finds the song on youtube and plays it in your current channel
+Music commands:
+?play <keywords> - Finds the song or playlist on youtube and plays it in your current channel.
 ?queue - Displays the current music queue
 ?skip - Skips the current song being played
 ?pause - This command pauses the song
 ?resume - Resumes the song
-?leave - Disconnecting bot from VC
+?stop - Disconnecting bot from VC
 ?remove <number> - Removes a song from the queue with index starting at 0
+?np - Shows current song
 ```
 """
         self.hello = """
@@ -36,12 +37,14 @@ No one but me, lozer!
 """
         self.sad_words = ["sad","kms", "depressed", "unhappy", "miserable", "depressing","fml","fuck my life","misery"]
 
+
         self.options = [
         "Don't listen to Stews. He lies. Cheer up!",
         "Don't listen to Stews. He lies. Hang in there.",
         "Don't listen to Stews. He lies. You are a great person / bot!"
         ]
         self.age = 19
+
 
     @commands.command(name="help", help="Displays all the available commands")
     async def help(self, ctx):
@@ -79,9 +82,8 @@ No one but me, lozer!
         msg = message.content
         for word in self.sad_words:
             if (' ' + word + ' ') in (' ' + msg.lower() + ' ') :
-                await asyncio.sleep(1)
-                await message.channel.send(choice(self.options))
-
+                print("hello")
+                
     @commands.command(name='birthday', help='This command displays a special birthday message')            
     async def birthday(self,ctx,*args):
         msg=''
@@ -90,5 +92,6 @@ No one but me, lozer!
           self.age+=1
         else:  
           msg= 'Happy Birthday!!!\n<a:neonpartyblob:929500659055722526> <a:partyCatJam:929500684322238494>'+ args[0]+'<a:partyCatJam:929500684322238494><a:neonpartyblob:929500659055722526>' 
-        await ctx.send(msg)
+        await ctx.send(msg)  
+
 
