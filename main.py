@@ -9,10 +9,7 @@ import youtube_dl
 from keep_alive import keep_alive
 from main_cog import main_cog
 from music_cog import music_cog
-
-
-
-#import all of the cogs
+from snipe_cog import snipe_cog
 
 
 bot = commands.Bot(command_prefix='?')
@@ -23,8 +20,13 @@ bot.remove_command('help')
 
 #register the class with the bot
 bot.add_cog(main_cog(bot))
-bot.add_cog(music_cog(bot))
+async def setup():
+    await bot.wait_until_ready()
+    bot.add_cog(music_cog(bot))
 
+bot.loop.create_task(setup())
+#bot.add_cog(music_cog(bot))
+bot.add_cog(snipe_cog(bot))
 
 
 

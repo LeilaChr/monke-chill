@@ -1,10 +1,10 @@
 import discord
-from replit import db
 from discord.ext import commands
 from random import choice
 import requests
 import asyncio 
 import json
+
 class main_cog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -83,7 +83,11 @@ No one but me, lozer!
         for word in self.sad_words:
             if (' ' + word + ' ') in (' ' + msg.lower() + ' ') :
                 print("hello")
-                
+        
+
+
+
+  
     @commands.command(name='birthday', help='This command displays a special birthday message')            
     async def birthday(self,ctx,*args):
         msg=''
@@ -93,5 +97,19 @@ No one but me, lozer!
         else:  
           msg= 'Happy Birthday!!!\n<a:neonpartyblob:929500659055722526> <a:partyCatJam:929500684322238494>'+ args[0]+'<a:partyCatJam:929500684322238494><a:neonpartyblob:929500659055722526>' 
         await ctx.send(msg)  
+    @commands.command(name='dictionary', help='This command returns dictionary') 
+    async def dictionary(self,ctx,*args):
+        if len(args)==0:
+            await ctx.send('https://www.merriam-webster.com/')
+        elif len(args) == 1:
+            await ctx.send("https://www.urbandictionary.com/define.php?term="+args[0])
+        else:
+            arg=args[0]
+            for i in range(1,len(args)):
+                arg+="%20"
+                arg+=args[i]
+            await ctx.send("https://www.urbandictionary.com/define.php?term="+arg)
+    
+
 
 
