@@ -7,7 +7,6 @@ class snipe_cog(commands.Cog):
         self.bot = bot
         bot.sniped_messages = {}
 
-        
         @bot.event
         async def on_message_delete(message):
             if message.attachments:
@@ -34,9 +33,6 @@ class snipe_cog(commands.Cog):
                 channel = bot.get_channel(966397399704682556)
                 await channel.send(embed=embed)
 
-            
-
-        
         @bot.command()
         async def snipe(ctx):
             try:

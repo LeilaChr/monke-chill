@@ -93,7 +93,7 @@ class music_cog(commands.Cog):
         info = await self.search_song(5, song)
 
         embed = discord.Embed(title=f"Results for '{song}':", description="*You can use these URL's to play an exact song if the one you want isn't the first result.*\n", colour=discord.Colour.red())
-        
+
         amount = 0
         for entry in info["entries"]:
             embed.description += f"[{entry['title']}]({entry['webpage_url']})\n"
@@ -138,11 +138,11 @@ class music_cog(commands.Cog):
 
         await poll_msg.add_reaction(u"\u2705") # yes
         await poll_msg.add_reaction(u"\U0001F6AB") # no
-        
+
         await asyncio.sleep(15) # 15 seconds to vote
 
         poll_msg = await ctx.channel.fetch_message(poll_id)
-        
+
         votes = {u"\u2705": 0, u"\U0001F6AB": 0}
         reacted = []
 
@@ -172,7 +172,6 @@ class music_cog(commands.Cog):
         if skip:
             ctx.voice_client.stop()
 
-
     @commands.command()
     async def pause(self, ctx):
         if ctx.voice_client.is_paused():
@@ -188,21 +187,7 @@ class music_cog(commands.Cog):
 
         if not ctx.voice_client.is_paused():
             return await ctx.send("I am already playing a song.")
-        
+
         ctx.voice_client.resume()
         await ctx.send("The current song has been resumed.")
-
-
-    
-  
-
-
-
-
-
-
-
-
-            
-
  
