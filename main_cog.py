@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 from random import choice
 import requests
+from discord import Member
 import asyncio 
 import json
 
@@ -97,6 +98,10 @@ No one but me, lozer!
         else:  
           msg= 'Happy Birthday!!!\n<a:neonpartyblob:929500659055722526> <a:partyCatJam:929500684322238494>'+ args[0]+'<a:partyCatJam:929500684322238494><a:neonpartyblob:929500659055722526>' 
         await ctx.send(msg)  
+
+
+
+        
     @commands.command(name='dictionary', help='This command returns dictionary') 
     async def dictionary(self,ctx,*args):
         if len(args)==0:
@@ -109,7 +114,56 @@ No one but me, lozer!
                 arg+="%20"
                 arg+=args[i]
             await ctx.send("https://www.urbandictionary.com/define.php?term="+arg)
-    
 
 
+    @commands.command(name='antonio')
+    async def antonio(self,ctx):
+        with open('antonio.png', 'rb') as f:
+            picture = discord.File(f)
+            await ctx.send("Hi, I am Antonio.")
+            await ctx.send(file=picture)
 
+
+            
+    @commands.command(name='starboy')
+    async def starboy(self,ctx):
+        with open('maaz.png', 'rb') as f:
+            picture = discord.File(f)
+            await ctx.send("Hi, I am Starboy.")
+            await ctx.send(file=picture)
+
+            
+    @commands.command(name='benny')
+    async def benny(self,ctx):
+        with open('benny.png', 'rb') as f:
+            picture = discord.File(f)
+            await ctx.send("Hi, I am Benny.")
+            await ctx.send(file=picture)
+
+            
+    @commands.command(name='shock')
+    async def shock(self,ctx):
+            await ctx.send('<a:pika:991390588920401964>')
+
+            
+    @commands.command(name='hack')
+    async def hack(self,ctx):
+            await ctx.send('<a:Heccer:991398539181690910>')
+
+        
+    @commands.command(name='pfp')
+    async def pfp(self,ctx,*args):
+            if (ctx.message.mentions.__len__()>0):
+                for user in ctx.message.mentions:
+                    await ctx.send(user.avatar_url)
+            else:
+                await ctx.send(ctx.message.author.avatar_url)
+
+    @commands.command(name='mock')
+    async def mock(self,ctx):
+        await ctx.send('<:mock:992259532610883675>')
+
+
+    @commands.command(name='dog')
+    async def dog(self,ctx):
+        await ctx.send('<:dog:992262018658742372>')
