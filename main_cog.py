@@ -19,6 +19,7 @@ General commands:
 ?quote - This command returns a random quote
 ?ping - This command returns the latency
 ?birthday - This command displays a special birthday message
+?darquote - This command returns a random dark quote/humor
 
 Music commands:
 ?play <keywords> - Finds the song or playlist on youtube and plays it in your current channel.
@@ -64,6 +65,14 @@ No one but me, lozer!
     @commands.command(name='die', help='This command returns a random last words')
     async def die(self,ctx):
         responses = ['Why have you brought my short life to an end', 'I could have done so much more', 'I have a family, kill them instead','It\'s better to burn out than to fade away. -Kurt Cobain','All compounded things are subject to vanish. Strive with earnestness. -Buddha','Relax - This won\'t hurt. -Hunter S. Thompson','I hope I haven\'t bored you. -Elvis Presley','Just don\'t leave me alone. -John Belushi','I do not believe in my death. -Salavdor Dali','Adieu, mes amis. Je vais Ã  la gloire. (Farewell, my friends. I go to glory.) -Isadora Duncan','I believe that a life lived for music is an existence spent wonderfully, and this is what I have dedicated my life to. -Luciano Pavarotti','Tell them I\'ve had a wonderful life. -Ludwig Wittgenstein','Friends applaud, the comedy is over. -Beethoven','I should have never switched from Scotch to martinis. -Humphrey Bogart','Let no one weep for me, or celebrate my funeral with mourning; for I still live, as I pass to and fro through the mouths of men. -Ennius','It matters not how strait the gate, How charged with punishments the scroll, I am the master of my fate: I am the captain of my soul. —Timothy McVeigh','Yes, I would just like to say I\'m sailing with the rock, and I\'ll be back, like Independence Day, with Jesus. June 6, like the movie. Big mother ship and all, I\'ll be back, I\'ll be back. —Aileen Wuornos','Leave me alone, I\'m fine. —Barry White','I\'d like to thank the Academy for my lifetime achievement award that I will eventually get.—Donald O','Jeb. Just remember, whatever happens, happens. —Dwain Weston','Now I\'ll show you how an Italian dies! -Fabrizio Quattrocchi','Let me go to the house of the Father. -Pope John Paul II','Don\'t die like I did. -George Best','My last words will be \"Hoka Hey, it\'s a good day to die.\" Thank you very much. I love you all. Goodbye. — Clarence Ray Allen','C\'mon. Let\'s get this day over and done with. -Peter Brock','And if I should ever die, God forbid, I hope you will say: \'Kurt is up in heaven now\'. That\'s my favorite joke. -Kurt Vonnegut','Katie, Katie, look, it\'ll be fine, you know, I just need to get some sleep. -Heath Ledger','I\'m the happiest man in the world. I\'ve just summited a beautiful mountain. -Clifton Maloney']
+        await ctx.send(choice(responses))
+        
+    @commands.command(name='darquote', help='This command returns a random dark quote/humor')
+    async def darquote(self,ctx):
+        responses = ['I need a hug from the line 1', 'Dark humor is like food, not everyone gets it.', 'Boutta put a period at the end of my life sentence',
+                     'When will side character get offed?','My spirit animal is a dragon because I aspire to not exist like it','Is there a purpose to having a purpose?',
+                     'Am I even worthy of being a burden?','My favorite party trick is becoming the piñata when nobody expects it',
+                     'The future is a camera with a covered shutter,ever running but always dark','Almost over the edge might drive over the edge']
         await ctx.send(choice(responses))
     
     @commands.command(name='ping', help='This command returns the latency')
